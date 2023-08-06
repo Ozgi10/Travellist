@@ -1,8 +1,16 @@
 import express from "express";
 import {
+  getCountriesQuery,
+  getCountryByIdQuery,
+  /*createCountryQuery,
+  deleteCountryQuery,
+  updateCountryQuery,*/
+} from "./queries.js";
+
+import {
   getCountries,
-  /*getCountryById,
-  createCountry,
+  getCountryById,
+  /*createCountry,
   deleteCountry,
   updateCountry,
   */
@@ -10,9 +18,15 @@ import {
 
 const router = express.Router();
 
-router.get("/", getCountries);
-/*router.get("/:id", getCountryById);
-router.post("/", createCountry);
+router.get("/", (req, res) => {
+  getCountries(req, res, getCountriesQuery);
+});
+
+router.get("/:id", (req, res) => {
+  getCountryById(req, res, getCountryByIdQuery);
+});
+
+/*router.post("/", createCountry);
 router.delete("/:id", deleteCountry);
 router.put("/:id", updateCountry);
 */

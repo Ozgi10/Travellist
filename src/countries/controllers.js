@@ -1,30 +1,24 @@
 import { pool } from "../../db.js";
-import {
-  getCountriesQuery,
-  getCountryByIdQuery,
-  createCountryQuery,
-  deleteCountryQuery,
-  updateCountryQuery,
-} from "./queries.js";
 
-export const getCountries = (req, res) => {
-  pool.query(getCountriesQuery, (error, results) => {
+export const getCountries = (req, res, dataQuery) => {
+  pool.query(dataQuery, (error, results) => {
     if (error) throw error;
     res.status(200).json(results.rows);
   });
 };
 
-/*export const getCountryById = (req, res) => {
+export const getCountryById = (req, res, dataQueryById) => {
   const id = parseInt(req.params.id);
 
-  pool.query(getCountryByIdQuery, [id], (error, results) => {
+  pool.query(dataQueryById, [id], (error, results) => {
     if (error) throw error;
     res.status(200).json(results.rows);
   });
 };
 
-export const createCountry = (req, res) => {
+/*export const createCountry = (req, res) => {
   const { name, aplha2Code, aplha3Code } = req.body;
+
   // add Country to db
 
   pool.query(
