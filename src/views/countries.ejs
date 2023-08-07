@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countries</title>
+  </head>
+
+  <body>
+    <h1>Countries</h1>
+    <ul>
+      <% countries.forEach(function(country) { %>
+      <li>
+        Name: <%= country.name %> Alpha2Code: <%= country.alpha2code %>
+        Alpha3Code: <%= country.alpha3code %>
+      </li>
+      <% }); %>
+    </ul>
+    <h2>Add a New Country</h2>
+    <form method="POST" action="/countries/addCountry">
+      <label for="name">Country Name:</label>
+      <input type="text" id="name" name="name" required><br>
+  
+      <label for="alpha2Code">Alpha 2 Code:</label>
+      <input type="text" id="alpha2Code" name="alpha2Code" required><br>
+  
+      <label for="alpha3Code">Alpha 3 Code:</label>
+      <input type="text" id="alpha3Code" name="alpha3Code" required><br>
+    </form>
+  </body>
+  </body>
+</html>

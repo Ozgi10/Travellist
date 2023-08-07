@@ -16,17 +16,18 @@ export const getCountryById = (req, res, dataQueryById) => {
   });
 };
 
-/*
 export const createCountry = (req, res, createQuery, data) => {
+  const { ...dataValues } = data;
 
-    const { ...dataValues } = data;
+  pool.query(createQuery, Object.values(dataValues), (error, results) => {
+    if (error) throw error;
 
-    pool.query(createQuery, Object.values(dataValues), (error, results) => {
-        if(error) throw error;
-
-        res.status(200).send('Country was successfully created');
-    })
+    res.status(200).json("Country is created!");
+  });
 };
+
+/*
+
 
 
 export const createCountry = (req, res, createQuery, data) => {
