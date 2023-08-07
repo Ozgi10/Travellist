@@ -16,9 +16,23 @@ export const getCountryById = (req, res, dataQueryById) => {
   });
 };
 
-/*export const createCountry = (req, res) => {
+/*
+export const createCountry = (req, res, createQuery, data) => {
+
+    const { ...dataValues } = data;
+
+    pool.query(createQuery, Object.values(dataValues), (error, results) => {
+        if(error) throw error;
+
+        res.status(200).send('Country was successfully created');
+    })
+};
+
+
+export const createCountry = (req, res, createQuery, data) => {
   const { name, aplha2Code, aplha3Code } = req.body;
 
+  
   // add Country to db
 
   pool.query(
