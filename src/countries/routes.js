@@ -1,24 +1,22 @@
+//import { pool } from "../../db.js";
 import express from "express";
-import {
-  getCountriesQuery,
-  getCountryByIdQuery,
-  createCountryQuery,
-  /*deleteCountryQuery,
-  updateCountryQuery,*/
-} from "./queries.js";
-
 import {
   getCountries,
   getCountryById,
   createCountry,
-  /*deleteCountry,
-  updateCountry,
-  */
+  deleteCountryById,
+  //updateCountry,//
 } from "./controllers.js";
+import {
+  getCountriesQuery,
+  getCountryByIdQuery,
+  createCountryQuery,
+  deleteCountryQuery,
+  //updateCountryQuery,//
+} from "./queries.js";
 
-import { body, check } from "express-validator";
-
-import { pool } from "../../db.js";
+/*import { body, check } from "express-validator";
+ */
 
 const router = express.Router();
 
@@ -43,8 +41,11 @@ router.post("/", (req, res) => {
   createCountry(req, res, createCountryQuery, data);
 });
 
-/*router.post("/", createCountry);
-router.delete("/:id", deleteCountry);
+router.delete("/:id", (req, res) => {
+  deleteCountryById(req, res, deleteCountryQuery);
+});
+
+/*
 router.put("/:id", updateCountry);
 */
 

@@ -90,3 +90,25 @@ router.put("/:id", updateCountry);
 
 export default router;
 */
+
+/*
+export const createCountry = (req, res) => {
+const name = `'${req.body.country}'`
+  const alpha2code =`'${req.body.alpha2code}'`
+  const alpha3code = `'${req.body.alpha3code}'` 
+  }
+
+  pool.query('SELECT * FROM countries WHERE name = $1', [name], (error, results) => {
+    if (error) throw error;
+
+    if (results.rows.length > 0) {
+      return res.status(400).send('Country already exists');
+    } else {
+      pool.query(createCountryQuery, [name, alpha2code, alpha3code], (error, results) => {
+        if (error) throw error;
+        res.status(200).json('Country created successfully');
+      });
+    }
+  });
+};
+*/

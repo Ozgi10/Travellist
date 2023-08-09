@@ -22,44 +22,11 @@ export const createCountry = (req, res, createQuery, data) => {
   pool.query(createQuery, Object.values(dataValues), (error, results) => {
     if (error) throw error;
 
-    res.status(200).json("Country is created!");
+    res.status(200).send("Country is created!");
   });
 };
 
-/*
-
-
-
-export const createCountry = (req, res, createQuery, data) => {
-  const { name, aplha2Code, aplha3Code } = req.body;
-
-  
-  // add Country to db
-
-  pool.query(
-    `SELECT * FROM countries WHERE aplha3Code='${aplha3Code}'`,
-    (error, result) => {
-      if (error) {
-        throw error;
-      }
-      if (result.rows.length > 0) {
-        res.status(400).send({ error: "aplha3Code already exists" });
-      } else {
-        pool.query(
-          createCountryQuery,
-          [name, aplha2Code, aplha3Code],
-          (error, results) => {
-            if (error) throw error;
-
-            res.status(201).send("Country was successfully created");
-          }
-        );
-      }
-    }
-  );
-};
-
-export const deleteCountry = (req, res) => {
+export const deleteCountryById = (req, res, deleteCountryQuery) => {
   const id = parseInt(req.params.id);
 
   pool.query(deleteCountryQuery, [id], (error, results) => {
@@ -68,6 +35,7 @@ export const deleteCountry = (req, res) => {
   });
 };
 
+/*
 export const updateCountry = (req, res) => {
   const id = parseInt(req.params.id);
   const { name, aplha2Code, aplha3Code } = req.body;
