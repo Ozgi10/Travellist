@@ -1,22 +1,18 @@
-//import { pool } from "../../db.js";
 import express from "express";
 import {
   getCountries,
   getCountryById,
   createCountry,
   deleteCountryById,
-  //updateCountry,//
+  updateCountryById,
 } from "./controllers.js";
 import {
   getCountriesQuery,
   getCountryByIdQuery,
   createCountryQuery,
   deleteCountryQuery,
-  //updateCountryQuery,//
+  updateCountryByIdQuery,
 } from "./queries.js";
-
-/*import { body, check } from "express-validator";
- */
 
 const router = express.Router();
 
@@ -45,8 +41,16 @@ router.delete("/:id", (req, res) => {
   deleteCountryById(req, res, deleteCountryQuery);
 });
 
-/*
-router.put("/:id", updateCountry);
-*/
+router.put("/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const data = {
+    name: req.body.name,
+    alpha2Code: req.body.alpha2Code,
+    alpha3Code: req.body.alpha3Code,
+  };
+
+  updateCountryById(req, res, updateCountryByIdQuery, data, id);
+});
 
 export default router;

@@ -35,18 +35,16 @@ export const deleteCountryById = (req, res, deleteCountryQuery) => {
   });
 };
 
-/*
-export const updateCountry = (req, res) => {
-  const id = parseInt(req.params.id);
-  const { name, aplha2Code, aplha3Code } = req.body;
+export const updateCountryById = (req, res, createQuery, data, id) => {
+  const { ...dataValues } = data;
 
   pool.query(
-    updateCountryQuery,
-    [name, aplha2Code, aplha3Code, id],
+    createQuery,
+    [...Object.values(dataValues), id],
     (error, results) => {
       if (error) throw error;
-      res.status(200).send("Country was successfully updated");
+
+      res.status(200).send("Country is successfully updated");
     }
   );
 };
-*/
