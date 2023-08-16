@@ -46,8 +46,8 @@ router.put("/:id", (req, res) => {
 
   const data = {
     name: req.body.name,
-    alpha2Code: req.body.alpha2Code,
-    alpha3Code: req.body.alpha3Code,
+    alpha2code: req.body.alpha2code,
+    alpha3code: req.body.alpha3code,
   };
 
   updateCountryById(req, res, updateCountryByIdQuery, data, id);
