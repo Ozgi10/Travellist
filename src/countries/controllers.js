@@ -1,50 +1,82 @@
 import { pool } from "../../db.js";
+import {
+  getCountriesQuery,
+  getCountryQueryById,
+  createCountryQuery,
+  updateCountryQuery,
+  deleteCountryQuery,
+} from "./queries.js";
 
-export const getCountries = (req, res, dataQuery) => {
-  pool.query(dataQuery, (error, results) => {
+export const getCountries = (req, res) => {
+  let query = getCountriesQuery;
+
+  // Check if the 'sort' query parameter exists and is set to 'true'
+  if (req.query.sort === "true") {
+    query += " ORDER BY name";
+  }
+
+  pool.query(query, (error, results) => {
     if (error) throw error;
     res.status(200).json(results.rows);
   });
 };
 
-export const getCountryById = (req, res, dataQueryById) => {
+export const getCountryById = (req, res) => {
   const id = parseInt(req.params.id);
 
-  pool.query(dataQueryById, [id], (error, results) => {
+  pool.query(getCountryQueryById, [id], (error, results) => {
     if (error) throw error;
     res.status(200).json(results.rows);
   });
 };
 
-export const createCountry = (req, res, createQuery, data) => {
-  const { ...dataValues } = data;
+export const createCountry = (req, res) => {
+  const { name, alpha2code, alpha3code } = req.body;
+  // add country to db
 
-  pool.query(createQuery, Object.values(dataValues), (error, results) => {
-    if (error) throw error;
+  pool.query(
+    `SELECT * FROM countries WHERE alpha2code='${alpha2code}'`,
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
 
-    res.status(200).send("Country is created!");
-  });
+      if (result.rows.length > 0) {
+        res.status(400).send({ error: "Alpha2 code already exists" });
+      } else {
+        pool.query(
+          createCountryQuery,
+          [name, alpha2code, alpha3code],
+          (error, results) => {
+            if (error) throw error;
+
+            res.status(201).send("Country was successfully created");
+          }
+        );
+      }
+    }
+  );
 };
 
-export const deleteCountryById = (req, res, deleteCountryQuery) => {
+export const deleteCountry = (req, res) => {
   const id = parseInt(req.params.id);
 
   pool.query(deleteCountryQuery, [id], (error, results) => {
     if (error) throw error;
-    res.status(200).send("Country was removed");
+    res.status(200).send("Country was successfully removed");
   });
 };
 
-export const updateCountryById = (req, res, createQuery, data, id) => {
-  const { ...dataValues } = data;
+export const updateCountry = (req, res) => {
+  const id = parseInt(req.params.id);
+  const { name, alpha2Code, alpha3Code } = req.body;
 
   pool.query(
-    createQuery,
-    [...Object.values(dataValues), id],
+    updateCountryQuery,
+    [name, alpha2Code, alpha3Code, id],
     (error, results) => {
       if (error) throw error;
-
-      res.status(200).send("Country is successfully updated");
+      res.status(200).send("Country was successfully updated");
     }
   );
 };

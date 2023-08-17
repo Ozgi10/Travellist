@@ -1,20 +1,21 @@
-import dotenv from "dotenv";
 import express from "express";
-import { mountRoutes } from "./mount_routes.js";
+import dotenv from "dotenv";
+import countriesRoutes from "./src/countries/routes.js";
 
+// Load environment variables from .env file
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000; // Use 3000 as the default port if PORT is not defined in .env
 
 app.use(express.json());
 
+app.listen(PORT, () => {
+  console.log(`The server is running on http://localhost:${PORT}`);
+});
+
 app.get("/", (req, res) => {
-  res.send("Hello Travellist!");
+  res.send("HELLO Travellist");
 });
 
-app.listen(port, () => {
-  console.log(`The server is running on http://localhost:${port}`);
-});
-
-mountRoutes(app);
+app.use("/api/countries", countriesRoutes);
